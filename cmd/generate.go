@@ -25,11 +25,12 @@ var generateCmd = &cobra.Command{
 	Long: `Generate a commit message from staged Git changes using a local or remote LLM.
 
 By default, it launches an interactive flow.
-Use --yes or -y to skip the prompt and commit directly.`,
+Use --yes or -y to skip the prompt and commit directly.
+Flags after -- will be passed directly to git. `,
 	Run: func(cmd *cobra.Command, args []string) {
 		cfg := config.LoadOrDefault()
 
-		diffText, err := diff.GetStagedDiff()
+		diffText, err := diff.GetStagedDiff(args)
 		if err != nil || diffText == "" {
 			fmt.Println("❌ No staged changes found.")
 			return
@@ -55,7 +56,7 @@ Use --yes or -y to skip the prompt and commit directly.`,
 			fmt.Println("----------------------------------")
 			fmt.Println(message)
 			fmt.Println("----------------------------------")
-			runGitCommit(message)
+			runGitCommit(args, message)
 			return
 		}
 
@@ -79,7 +80,7 @@ Use --yes or -y to skip the prompt and commit directly.`,
 
 			switch strings.ToLower(string(char)) {
 			case "c":
-				runGitCommit(message)
+				runGitCommit(args, message)
 				return
 			case "e":
 				message = editMessage(message)
@@ -110,10 +111,11 @@ func init() {
 	rootCmd.AddCommand(generateCmd)
 }
 
-func runGitCommit(msg string) {
+func runGitCommit(options []string, msg string) {
 	fmt.Println("✅ Committing with:")
 	fmt.Println(msg)
-	cmd := exec.Command("git", "commit", "-m", msg)
+	options = append(options, "commit", "-m", msg);
+	cmd := exec.Command("git", options...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

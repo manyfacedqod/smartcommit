@@ -4,8 +4,9 @@ import (
 	"os/exec"
 )
 
-func GetStagedDiff() (string, error) {
-	out, err := exec.Command("git", "diff", "--cached").Output()
+func GetStagedDiff(options []string) (string, error) {
+	args := append(options, "diff", "--cached");
+	out, err := exec.Command("git", args...).Output()
 	if err != nil {
 		return "", err
 	}
