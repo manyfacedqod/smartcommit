@@ -84,11 +84,17 @@ Choose [c]ommit, [e]dit, [r]egenerate, [q]uit:
 smartcommit generate --yes
 ```
 
-### Config Commands
+### Config Commands (the system prompt for your commits)
 
 ```bash
 smartcommit config show   # display current config
 smartcommit config edit   # edit system prompt in $EDITOR
+```
+
+### To Setup/resetup
+
+```bash
+smartcommit setup
 ```
 
 ### Version
@@ -121,7 +127,7 @@ We welcome your contributions! 🚀
 1. **Fork** the repo and **clone** your fork:
 
    ```bash
-   git clone https://github.com/<your-user>/smartcommit.git
+   git clone https://github.com/manyfacedqod/smartcommit.git
    cd smartcommit
    ```
 
@@ -150,7 +156,7 @@ We welcome your contributions! 🚀
 - Update this README when adding or changing commands.  
 
 ---
-(this one kinda ai generated, will update later(
+(this one kinda ai generated, will update later)
 ## 📄 License
 
 MIT License © manyfacedqod
