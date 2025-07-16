@@ -91,11 +91,6 @@ smartcommit config show   # display current config
 smartcommit config edit   # edit system prompt in $EDITOR
 ```
 
-### To Setup/resetup
-
-```bash
-smartcommit setup
-```
 
 ### Version
 
